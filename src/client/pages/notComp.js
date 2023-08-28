@@ -18,22 +18,18 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import NotInterestedIcon from "@material-ui/icons/NotInterested";
 import AddSharpIcon from "@material-ui/icons/AddSharp";
 import { styled } from "@material-ui/core/styles";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import axios from "axios";
 function Notcomp(props) {
   const [text, setText] = useState('');
 
-  console.log("from notcomp  " + JSON.stringify(props.ncompProps));
   const handleClick = async () => {
     try {
       const response = await axios.post(`api/tasks/`, {
         description: text,
       });
     
-      // Handle the response if needed
-      console.log("Post response:", response.data);
     } catch (error) {
-      // Handle errors
       console.error("Error:", error);
     }
   };
@@ -68,7 +64,7 @@ function Notcomp(props) {
                     fontSize: 14,
                     backgroundColor: "white",
                     borderRadius: 5,
-                    marginLeft: "550px",
+                    marginLeft: "430px",
                   }}
                   minRows={6}
                   maxRows={6.4}
@@ -82,7 +78,7 @@ function Notcomp(props) {
                 <Button
                   variant="contained"
                   color="secondary"
-                  style={{ marginLeft: "470px", marginTop: "40px" }}
+                  style={{ marginLeft: "350px", marginTop: "40px" }}
                 >
                   Logout
                 </Button>
@@ -94,48 +90,23 @@ function Notcomp(props) {
     );
   }
   const handleDelete = async (id) => {
-    console.log("   " + id);
     try {
       const response = await axios.delete(`api/tasks/${id}`);
-      console.log("GOVINDA  " + JSON.stringify(response));
-      setValue(value);
     } catch (error) {
       console.log(error);
     }
   };
-
-  return (
-    <div>
-      <Button
-        variant="outlined"
-        startIcon={<NotInterestedIcon />}
-        style={{
-          margin: "0px 20px 30px 10px",
-          minWidth: 50,
-          marginLeft: "680px",
-        }}
-        size="medium"
-      >
-        completed
-      </Button>
-      <Divider style={{ margin: "0px 0px 0px 5px" }}></Divider>
-      <Grid
-        container
-        direction="column"
-        spacing={2}
-        style={{ marginBottom: "100px", marginTop: "30px" }}
-      >
-        {props.ncompProps.map((n, i = 0) => {
+  const data = ()=>{ return(
+      props.ncompProps.map((n, i = 0) => {
           i === 0 ? (i = 1) : (i = i + 5);
           return (
             <Grid
               container
               direction="row"
-              key={i + 5}
-              style={{ spacing: 4, marginBottom: "10px", fontSize: 18 }}
+              key={i}
+              style={{ spacing: 3, marginBottom: "10px", fontSize: 18 }}
             >
               <Chip
-                key={i + 1}
                 label={i === 1 ? i : i - 4}
                 style={{
                   margin: "5px",
@@ -145,13 +116,11 @@ function Notcomp(props) {
                 }}
               />
               <Chip
-                key={i * 78 + 2}
                 label={n.description.slice(0, 15)}
-                style={{ margin: "0px 20px", minWidth: 200 }}
+                style={{ margin: "0px 10px", minWidth: 200 }}
               />
               <Accordion
                 TransitionProps={{ unmountOnExit: true }}
-                key={i * 31 + 3}
                 style={{
                   margin: "0px 20px ",
                   width: 400,
@@ -166,27 +135,24 @@ function Notcomp(props) {
                 </AccordionDetails>
               </Accordion>
               <Chip
-                key={i * 72 + 5}
                 label={n.updatedAt.substring(10, 5)}
-                style={{ margin: "0px 20px", minWidth: 100, fontSize: 17 }}
+                style={{ margin: "0px 10px", minWidth: 100, fontSize: 17 }}
               />
               <Chip
-                key={i * 95 + 5}
                 label={"" + n.updatedAt.substring(0, 10)}
-                style={{ margin: "0px 20px", minWidth: 100, fontSize: 17 }}
+                style={{ margin: "0px 10px", minWidth: 100, fontSize: 17 }}
               />
               <Chip
-                key={i * 66 + 6}
                 label={"created on " + n.createdAt.substring(0, 10)}
-                style={{ margin: "0px 20px", minWidth: 100, fontSize: 17 }}
+                style={{ margin: "0px 10px", minWidth: 100, fontSize: 17 }}
               />
               <Chip
                 label={"undone"}
-                style={{ margin: "0px 20px", minWidth: 100, fontSize: 17 }}
+                style={{ margin: "0px 10px", minWidth: 100, fontSize: 17 }}
               />
               <Chip
                 icon={<DeleteIcon />}
-                style={{ margin: "0px 20px", backgroundColor: "white" }}
+                style={{ margin: "0px 10px", backgroundColor: "white" }}
                 deleteIcon={<DeleteIcon />}
                 onClick={() => {
                   handleDelete(n._id);
@@ -194,7 +160,32 @@ function Notcomp(props) {
               />
             </Grid>
           );
-        })}
+        })
+
+  )}
+  const memoData = useMemo(()=>{ return data()},[props.ncompProps])
+  return (
+    <div>
+      <Button
+        variant="outlined"
+        startIcon={<NotInterestedIcon />}
+        style={{
+          margin: "0px 20px 30px 10px",
+          minWidth: 50,
+          marginLeft: "600px",
+        }}
+        size="medium"
+      >
+        completed
+      </Button>
+      <Divider style={{ margin: "0px 0px 0px 5px" }}></Divider>
+      <Grid
+        container
+        direction="column"
+        spacing={2}
+        style={{ marginBottom: "150px", marginTop: "30px" }}
+      >
+        {memoData}
       </Grid>
       {Add()}
     </div>

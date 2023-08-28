@@ -5,7 +5,6 @@ import React from "react";
 
 const Merger =(props) =>{
  
-//console.log(storedDarkMode)          
 console.log("from merger "+JSON.stringify(props.dataProp.done))
   return (
    <div>

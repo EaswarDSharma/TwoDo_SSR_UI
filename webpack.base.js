@@ -7,9 +7,10 @@ module.exports = {
         loader: 'babel-loader',//executes babel & transpiles our code
         exclude: /node_modules/,
         options: {
-          presets: [
+          plugins: [ //presets previously
             'react',// jsx to js func calls
-            'stage-0',// handles async code written later on
+            //'stage-0',// handles async code written later on
+            "@babel/plugin-proposal-function-bind", // with plugins
             ['env', { targets: { browsers: ['last 2 versions'] } }] //
           ]
         }
@@ -18,10 +19,3 @@ module.exports = {
   }
 };
 
-/*
-replace presets with plugins 
-  "plugins": [
-    // Stage 0
-    "@babel/plugin-proposal-function-bind",
-  ]
-*/

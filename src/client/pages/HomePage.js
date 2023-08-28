@@ -1,23 +1,16 @@
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { ThemeProvider, createTheme } from "@material-ui/core/styles";
-import { Card, Paper, Box, Divider,Button, Switch, styled, Typography } from "@material-ui/core";
+import { Card, Paper, Box, Divider,Button } from "@material-ui/core";
 import React from "react";
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';// localstore
-//import LoadingButton from "@mui/lab/LoadingButton";
-//import GoogleIcon from "@mui/icons-material/Google";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-// googleicon place lo roundradio, loading place lo normal button
  const Home = () => {
  
-//  console.log(darkMode+"  t  "+ localStorage.getItem("dark-Mode"));
   return (
     <div>
       <Box>
         
                 <CssBaseline />
               <div style={{ display: 'flex', alignItems: 'center' }}>
-          
-          
         <Divider variant="middle" /> 
       </div>
           <Card
@@ -55,9 +48,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';// localstore
         oauth
       </Button>
             </Paper>
-
             <Divider orientation="vertical" variant="middle" />
-
             <Paper
               style={{
                 padding: 40,
